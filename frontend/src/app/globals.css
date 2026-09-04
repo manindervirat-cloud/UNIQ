@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    background-image:
+      radial-gradient(900px 600px at 12% -10%, rgba(99, 102, 241, 0.16), transparent 60%),
+      radial-gradient(800px 520px at 95% 8%, rgba(34, 211, 238, 0.10), transparent 55%),
+      radial-gradient(700px 700px at 55% 110%, rgba(139, 92, 246, 0.12), transparent 60%);
+    background-attachment: fixed;
+  }
+  ::selection {
+    @apply bg-blue/40 text-white;
+  }
+  :focus-visible {
+    outline: 2px solid theme("colors.blue.DEFAULT");
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  /* Native select popups ignore page CSS for their surface but inherit
+     text color — force a dark, readable option list everywhere. */
+  select {
+    color-scheme: dark;
+  }
+  select option {
+    background-color: #0d1526;
+    color: #eef2f9;
+    padding: 8px;
+  }
+  select option:disabled {
+    color: #7d8aa0;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer components {
+  /* Frosted-glass working surface — layered, never flat. */
+  .panel {
+    @apply rounded-2xl border border-line shadow-card;
+    background: linear-gradient(165deg, rgba(23, 33, 54, 0.86), rgba(13, 20, 36, 0.82));
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .panel-hover {
+    @apply transition-all duration-300;
+    transform: translateZ(0);
+  }
+  .panel-hover:hover {
+    @apply shadow-raised;
+    transform: translateY(-3px) translateZ(0);
+  }
+
+  /* The product gradient — primary actions only. */
+  .grad-primary {
+    background-image: linear-gradient(120deg, #4f46e5 0%, #7c3aed 55%, #06b6d4 130%);
+    background-size: 150% 100%;
+    background-position: 0% 0%;
+    transition:
+      background-position 0.4s ease,
+      box-shadow 0.3s ease,
+      transform 0.15s ease;
+  }
+  .grad-primary:hover {
+    background-position: 90% 0%;
+    box-shadow: 0 0 28px rgba(109, 93, 246, 0.5);
+  }
+  .grad-text {
+    background-image: linear-gradient(100deg, #a5b4fc, #c4b5fd 45%, #67e8f9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .tag {
+    @apply inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold;
+    backdrop-filter: blur(6px);
+  }
+  .tag-neutral {
+    @apply border-line-strong bg-white/5 text-ink-soft;
+  }
+  .tag-blue {
+    @apply border-blue/40 bg-blue-wash text-blue-deep;
+  }
+  .tag-amber {
+    @apply border-amber/40 bg-amber-wash text-amber;
+  }
+  .tag-green {
+    @apply border-green/40 bg-green-wash text-green;
+  }
+  .tag-red {
+    @apply border-red/40 bg-red-wash text-red;
+  }
+
+  /* Shimmer skeleton — no blank loading anywhere. */
+  .skeleton {
+    @apply rounded-2xl border border-line;
+    background:
+      linear-gradient(
+          100deg,
+          transparent 20%,
+          rgba(148, 163, 184, 0.08) 50%,
+          transparent 80%
+        )
+        no-repeat,
+      linear-gradient(165deg, rgba(23, 33, 54, 0.6), rgba(13, 20, 36, 0.55));
+    background-size:
+      400px 100%,
+      100% 100%;
+    animation: shimmer 1.6s linear infinite;
+  }
+
+  /* Inner sub-surface (replaces flat bg-paper blocks inside panels). */
+  .well {
+    @apply rounded-xl border border-line bg-white/[0.04];
+  }
+}

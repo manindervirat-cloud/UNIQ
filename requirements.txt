@@ -1,0 +1,35 @@
+# Study Abroad AI Platform - Backend Dependencies
+# Python 3.10+
+# Install: pip install -r requirements.txt
+
+# === Core Framework ===
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
+
+# === Data Validation ===
+pydantic>=2.0.0,<3.0.0
+
+# === HTTP & Web Scraping ===
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+
+# === Production Server ===
+gunicorn>=21.2.0
+
+# === Additional ===
+python-multipart>=0.0.9
+
+# === SOP module (embedded at src/backend/modules/sop) ===
+# pydantic-settings is required at import time (the SOP config in
+# modules/sop/config/settings.py imports it at module top level), so the
+# host app cannot start without it. It is NOT optional.
+pydantic-settings>=2.2.0
+
+# Optional LLM + research backends. These are LAZY-imported: the app starts
+# and serves /api/v1/sop/health, /fields and /requirements without them, and
+# /generate gracefully degrades to a template draft when openai/ddgs are
+# absent. requests + beautifulsoup4 (already listed above) are also used
+# lazily by the research path.
+openai>=1.40.0
+ddgs>=9.0.0
+
